@@ -64,32 +64,6 @@
 </script>
 
 <main class="flex min-h-screen flex-col bg-[#0e0e0e]">
-	<!-- Grain overlay -->
-	<div
-		class="pointer-events-none fixed inset-0 z-50 opacity-[0.04]"
-		style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22 opacity=%221%22/></svg>')"
-	></div>
-
-	<!-- Nav -->
-	<nav class="flex w-full items-center justify-between px-12 pt-8">
-		<a
-			href="/"
-			class="font-mono text-[11px] tracking-[0.25em] text-white/30 uppercase transition-colors duration-300 hover:text-white/70"
-		>
-			← back
-		</a>
-		<div class="flex gap-10">
-			{#each ['Me', 'Projects', 'Contact'] as label}
-				<a
-					href={`/${label.toLowerCase()}`}
-					class={`font-mono text-[11px] tracking-[0.2em] uppercase transition-colors duration-300 ${label === 'Projects' ? 'text-white/80' : 'text-white/30 hover:text-white/70'}`}
-				>
-					{label}
-				</a>
-			{/each}
-		</div>
-	</nav>
-
 	<!-- Page header -->
 	<header class="mx-auto w-full max-w-5xl px-12 pt-20 pb-16">
 		<p class="mb-4 font-mono text-[10px] tracking-[0.35em] text-white/30 uppercase">
@@ -198,12 +172,6 @@
 </main>
 
 <style>
-	:global(html, body) {
-		margin: 0;
-		padding: 0;
-		background: #0e0e0e;
-	}
-
 	/* Animated gradient placeholder */
 	@keyframes gradient-shift {
 		0% {

@@ -490,13 +490,6 @@
 </main>
 
 <style>
-	:global(html, body) {
-		margin: 0;
-		padding: 0;
-		background: #0e0e0e;
-		font-family: 'DM Mono', monospace;
-	}
-
 	.nav-link {
 		position: relative;
 	}

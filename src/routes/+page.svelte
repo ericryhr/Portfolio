@@ -167,12 +167,6 @@
 <main
 	class="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0e0e0e]"
 >
-	<!-- Subtle grain overlay -->
-	<div
-		class="pointer-events-none fixed inset-0 z-50 opacity-[0.04]"
-		style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22 opacity=%221%22/></svg>')"
-	></div>
-
 	<!-- Bass guitar stage -->
 	<div class="relative flex w-full max-w-5xl flex-col items-center" style="height: 680px;">
 		<!-- ── Nav (centered, floating) ── -->
@@ -200,13 +194,6 @@
 </main>
 
 <style>
-	:global(html, body) {
-		margin: 0;
-		padding: 0;
-		background: #0e0e0e;
-		font-family: 'DM Mono', monospace;
-	}
-
 	.nav-link {
 		position: relative;
 	}
