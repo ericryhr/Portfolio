@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import smarttracking_00 from '$lib/assets/smarttracking_00.png';
 
 	// ── Projects data ──────────────────────────────────────────────────────────
 	// Replace with your actual projects. `image` can be an import path or null for placeholder.
@@ -8,7 +9,7 @@
 			title: 'Hawk-Eye Clone',
 			blurb:
 				'Recreation of the Hawk-Eye visualization system used in tennis broadcasts, but using AI-upscaled real video for the ball impact points instead of CGI.',
-			stack: ['Unity', 'C#', 'C++'],
+			stack: ['Unity', 'C#', 'C++', 'Blender'],
 			video: null,
 			image: null,
 			accent: '#1a3a2a', // placeholder gradient accent colour — swap per project
@@ -18,21 +19,41 @@
 			title: 'Padel Smart Tracker',
 			blurb:
 				'Triangulation of ball and player positions in real-time using six cameras around a padel court and estimation of trajectories for prediction of future positions, for use in match analysis.',
-			stack: ['Unreal Engine', 'C++'],
+			stack: ['Unreal Engine', 'C++', 'Blender'],
 			video: null,
-			image: null,
+			image: smarttracking_00,
 			accent: '#1a1a3a',
 			accent2: '#0a0a1a'
 		},
 		{
+			title: 'Training Object Detection Models on Synthetic Images',
+			blurb:
+				"Master's thesis on the use of synthetic data generated from 3D models and a game engine for training object detection models, as an alternative to manual annotation of real images.",
+			stack: ['YOLO', 'Unity', 'C#', 'Blender', 'Python'],
+			video: null,
+			image: null,
+			accent: '#1a3a1a',
+			accent2: '#0a1a0a'
+		},
+		{
 			title: 'Inertial Movement Detector Deployment',
 			blurb:
-				'Mobile deployment of an inertial movement detection model for tracking human movement using smartphone sensors, without the use of GPS.',
+				"Bachelor's thesis on the mobile deployment of an inertial movement detection model for tracking human movement using smartphone sensors, without the use of GPS.",
 			stack: ['Android', 'iOS', 'Unity', 'C#', 'ONNX', 'PyTorch'],
 			video: '/videos/demo_escales_opt.mp4',
 			image: null,
 			accent: '#3a1a1a',
 			accent2: '#1a0a0a'
+		},
+		{
+			title: 'Climbing Safety System',
+			blurb:
+				'Design and deployment of a computer vision system that detects if a climber is well tied in before they start climbing, to prevent accidents.',
+			stack: ['Raspberry Pi', 'Python'],
+			video: null,
+			image: null,
+			accent: '#3a3a1a',
+			accent2: '#1a1a0a'
 		}
 	];
 
@@ -95,11 +116,7 @@
 				<!-- ── Graphic / image ── -->
 				<div class="relative h-56 w-72 shrink-0 overflow-hidden lg:h-64 lg:w-96">
 					{#if project.image}
-						<img
-							src={project.image}
-							alt={project.title}
-							class="h-full w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
-						/>
+						<img src={project.image} alt={project.title} class="h-full w-full object-cover" />
 					{:else if project.video}
 						<video
 							src={project.video}
@@ -108,7 +125,7 @@
 							loop
 							playsinline
 							preload="none"
-							class="h-full w-full object-cover transition-all"
+							class="h-full w-full object-cover"
 						>
 						</video>
 					{:else}

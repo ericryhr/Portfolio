@@ -43,7 +43,7 @@
 <main class="flex min-h-screen flex-col bg-[#0e0e0e]">
 	<!-- Content -->
 	<div class="flex flex-1 items-center justify-center px-12 py-16">
-		<div class="flex w-full max-w-lg flex-col gap-6">
+		<div class="flex w-full max-w-lg flex-col gap-3">
 			<!-- Header -->
 			<div
 				class="transition-all duration-700 ease-out"
@@ -157,11 +157,6 @@
 
 							<!-- Right: handle + arrow -->
 							<div class="flex items-center gap-4">
-								<!-- <span
-									class="link-sub font-mono text-[10px] tracking-[0.15em] transition-colors duration-300"
-								>
-									{link.sub}
-								</span> -->
 								<span
 									class="link-arrow inline-block transition-all duration-300 group-hover:translate-x-1"
 								>
@@ -184,10 +179,6 @@
 	}
 	.link-label {
 		color: rgba(255, 255, 255, 0.65);
-		transition: color 0.3s;
-	}
-	.link-sub {
-		color: rgba(255, 255, 255, 0.3);
 		transition: color 0.3s;
 	}
 	.link-arrow {
