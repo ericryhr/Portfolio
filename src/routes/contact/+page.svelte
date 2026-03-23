@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 
 	let mounted = $state(false);
@@ -40,15 +40,6 @@
 	];
 </script>
 
-<svelte:head>
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
-		rel="stylesheet"
-	/>
-</svelte:head>
-
 <main class="flex min-h-screen flex-col bg-[#0e0e0e]">
 	<!-- Grain overlay -->
 	<div
@@ -78,7 +69,7 @@
 
 	<!-- Content -->
 	<div class="flex flex-1 items-center justify-center px-12 py-16">
-		<div class="flex w-full max-w-lg flex-col gap-12">
+		<div class="flex w-full max-w-lg flex-col gap-6">
 			<!-- Header -->
 			<div
 				class="transition-all duration-700 ease-out"

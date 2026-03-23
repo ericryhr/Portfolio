@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	// Replace this import with your actual photo when ready
 	import photo from '$lib/assets/me_00.jpeg';
 
@@ -32,15 +32,6 @@
 	}
 </script>
 
-<svelte:head>
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap"
-		rel="stylesheet"
-	/>
-</svelte:head>
-
 <main class="flex min-h-screen flex-col bg-[#0e0e0e]">
 	<!-- Grain overlay (matches main page) -->
 	<div
@@ -70,10 +61,10 @@
 
 	<!-- Main content: photo + text side by side -->
 	<div class="flex flex-1 items-center justify-center px-12 py-16">
-		<div class="flex w-full max-w-5xl items-center gap-16 lg:gap-24">
+		<div class="mx-auto flex max-w-5xl items-center gap-16 lg:gap-24">
 			<!-- ── Left: Photo ── -->
 			<div
-				class="relative flex-shrink-0 transition-all duration-700 ease-out"
+				class="relative shrink-0 transition-all duration-700 ease-out"
 				class:opacity-0={!mounted}
 				class:translate-y-4={!mounted}
 				class:opacity-100={mounted}
@@ -83,7 +74,7 @@
 				<!-- Decorative offset border -->
 				<div class="absolute -top-3 -left-3 h-full w-full border border-white/10"></div>
 
-				<div class="relative h-96 w-72 overflow-hidden bg-white/5 lg:h-[420px] lg:w-80">
+				<div class="relative h-96 w-72 overflow-hidden bg-white/5 lg:h-105 lg:w-80">
 					{#if photo}
 						<img
 							src={photo}

@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	// ── Audio ──────────────────────────────────────────────────────────────────
-	let audioCtx = $state(null);
+	let audioCtx: AudioContext | null = $state(null);
 
 	function getAudioCtx() {
-		if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+		if (!audioCtx) audioCtx = new window.AudioContext();
 		return audioCtx;
 	}
 
@@ -11,7 +11,7 @@
 	 * Pluck a string at the given frequency.
 	 * Uses a short sine burst with an exponential decay.
 	 */
-	function pluck(freq) {
+	function pluck(freq: number) {
 		const ctx = getAudioCtx();
 		const osc = ctx.createOscillator();
 		const gain = ctx.createGain();
@@ -34,10 +34,10 @@
 
 	// We track per-string animation state: { wave: number (0–1 phase), active: bool }
 	let strings = $state(
-		[0, 1].map(() => BASS_FREQS.map(() => ({ phase: 0, active: false, frame: null })))
+		[0, 1].map(() => BASS_FREQS.map(() => ({ phase: 0, active: false, frame: Number.NaN })))
 	);
 
-	function triggerString(bassIdx, strIdx) {
+	function triggerString(bassIdx: number, strIdx: number) {
 		pluck(BASS_FREQS[strIdx]);
 		const s = strings[bassIdx][strIdx];
 		s.active = true;
@@ -48,7 +48,7 @@
 		const startTime = performance.now();
 		const duration = 1400; // ms — matches audio decay
 
-		function tick(now) {
+		function tick(now: number) {
 			const t = (now - startTime) / duration;
 			if (t >= 1) {
 				s.active = false;
@@ -65,13 +65,8 @@
 	// ── SVG string wave path helper ────────────────────────────────────────────
 	/**
 	 * Build a wavy SVG path for a string.
-	 * @param {number} x1   start x
-	 * @param {number} x2   end x
-	 * @param {number} y    baseline y
-	 * @param {number} phase  animation phase 0–1
-	 * @param {boolean} active
 	 */
-	function wavePath(x1, x2, y, phase, active) {
+	function wavePath(x1: number, x2: number, y: number, phase: number, active: boolean) {
 		if (!active) return `M ${x1} ${y} L ${x2} ${y}`;
 
 		const len = x2 - x1;
@@ -94,11 +89,15 @@
 	 * Given an SVG element and a pointer event, return the string index hit (-1 if none).
 	 * stringYs: array of y coordinates (in SVG space) for each string.
 	 */
-	function hitString(svgEl, e, stringYs, rotation) {
+	function hitString(svgEl: SVGSVGElement, e: MouseEvent, stringYs: number[], rotation: number) {
 		const pt = svgEl.createSVGPoint();
 		pt.x = e.clientX;
 		pt.y = e.clientY;
-		const svgPt = pt.matrixTransform(svgEl.getScreenCTM().inverse());
+
+		const ctm = svgEl.getScreenCTM();
+		if (!ctm) return -1;
+
+		const svgPt = pt.matrixTransform(ctm.inverse());
 
 		// The SVG is rotated as a whole group; we need to un-rotate around center
 		const cx = 300,
@@ -152,7 +151,7 @@
 	// ── Cursor tracking per SVG ────────────────────────────────────────────────
 	let lastHit = [-1, -1]; // last string index hit per bass, to avoid re-triggering
 
-	function onMouseMove(bassIdx, e) {
+	function onMouseMove(bassIdx: number, e: MouseEvent) {
 		const svgEl = svgRefs[bassIdx];
 		if (!svgEl) return;
 		const hit = hitString(svgEl, e, STRING_YS, 0); // rotation handled in hit fn, pass 0 here since we rotate the group
@@ -163,16 +162,6 @@
 		if (hit === -1) lastHit[bassIdx] = -1;
 	}
 </script>
-
-<!-- ── Fonts ──────────────────────────────────────────────────────────────── -->
-<svelte:head>
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400&display=swap"
-		rel="stylesheet"
-	/>
-</svelte:head>
 
 <!-- ── Page ───────────────────────────────────────────────────────────────── -->
 <main
@@ -203,11 +192,11 @@
 	</div>
 
 	<!-- Hint label -->
-	<!-- <p
+	<p
 		class="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.25em] text-white/20 uppercase"
 	>
-		move your cursor across the strings
-	</p> -->
+		work in progress...
+	</p>
 </main>
 
 <style>
