@@ -4,7 +4,7 @@
 
 	// Staggered entrance — track whether page has mounted
 	import { onMount } from 'svelte';
-	let mounted = $state(false);
+	let mounted = false;
 	onMount(() => {
 		// Small delay so CSS transition fires after first paint
 		requestAnimationFrame(() => {
@@ -34,11 +34,11 @@
 
 <main class="flex min-h-screen flex-col bg-[#0e0e0e]">
 	<!-- Main content: photo + text side by side -->
-	<div class="flex flex-1 items-center justify-center px-12 py-16">
-		<div class="mx-auto flex max-w-5xl items-center gap-16 lg:gap-24">
+	<div class="flex flex-1 items-center justify-center px-6 py-12 sm:px-8 md:px-12 md:py-16">
+		<div class="mx-auto flex max-w-5xl flex-col items-center gap-8 md:flex-row md:gap-16 lg:gap-24">
 			<!-- ── Left: Photo ── -->
 			<div
-				class="relative shrink-0 transition-all duration-700 ease-out"
+				class="relative mb-8 shrink-0 transition-all duration-700 ease-out md:mb-0"
 				class:opacity-0={!mounted}
 				class:translate-y-4={!mounted}
 				class:opacity-100={mounted}
@@ -48,7 +48,7 @@
 				<!-- Decorative offset border -->
 				<div class="absolute -top-3 -left-3 h-full w-full border border-white/10"></div>
 
-				<div class="relative h-96 w-72 overflow-hidden bg-white/5 lg:h-105 lg:w-80">
+				<div class="relative h-72 w-56 overflow-hidden bg-white/5 md:h-96 md:w-72 lg:h-105 lg:w-80">
 					{#if photo}
 						<img
 							src={photo}
@@ -88,7 +88,7 @@
 			</div>
 
 			<!-- ── Right: Text ── -->
-			<div class="flex max-w-lg flex-col gap-8">
+			<div class="flex w-full max-w-lg flex-col gap-8">
 				<!-- Title block -->
 				<div
 					class="transition-all duration-700 ease-out"
@@ -104,7 +104,7 @@
 					</p>
 					<!-- Big display name -->
 					<h1
-						class="text-6xl leading-none font-light tracking-tight text-white/90 lg:text-7xl"
+						class="text-4xl leading-none font-light tracking-tight text-white/90 sm:text-5xl md:text-6xl lg:text-7xl"
 						style="font-family: 'Cormorant Garamond', serif;"
 					>
 						Hi!<br />

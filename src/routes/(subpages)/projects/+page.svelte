@@ -58,7 +58,8 @@
 	];
 
 	// ── Scroll reveal ──────────────────────────────────────────────────────────
-	let visible = $state(projects.map(() => false));
+	// Track visibility per project (plain array — `$state` was incorrect here)
+	let visible = projects.map(() => false);
 
 	onMount(() => {
 		const observers: IntersectionObserver[] = [];
@@ -86,7 +87,7 @@
 
 <main class="flex min-h-screen flex-col bg-[#0e0e0e]">
 	<!-- Page header -->
-	<header class="mx-auto w-full max-w-5xl px-12 pt-20 pb-16">
+	<header class="mx-auto w-full max-w-5xl px-6 pt-20 pb-16 sm:px-8 md:px-12">
 		<p class="mb-4 font-mono text-[10px] tracking-[0.35em] text-white/30 uppercase">
 			selected work
 		</p>
@@ -100,21 +101,20 @@
 	</header>
 
 	<!-- Project list -->
-	<section class="mx-auto flex w-full max-w-5xl flex-col gap-32 px-12 pb-32">
+	<section class="mx-auto flex w-full max-w-5xl flex-col gap-24 px-6 pb-32 sm:px-8 md:px-12">
 		{#each projects as project, i}
 			{@const flipped = i % 2 !== 0}
 
 			<article
 				id="project-{i}"
-				class="flex items-center gap-12 transition-all duration-700 ease-out lg:gap-20"
+				class={`flex flex-col items-center gap-6 transition-all duration-700 ease-out md:flex-row md:gap-12 lg:gap-20 ${flipped ? 'md:flex-row-reverse' : ''}`}
 				class:opacity-0={!visible[i]}
 				class:translate-y-8={!visible[i]}
 				class:opacity-100={visible[i]}
 				class:translate-y-0={visible[i]}
-				class:flex-row-reverse={flipped}
 			>
 				<!-- ── Graphic / image ── -->
-				<div class="relative h-56 w-72 shrink-0 overflow-hidden lg:h-64 lg:w-96">
+				<div class="relative h-56 w-full shrink-0 overflow-hidden md:h-56 md:w-72 lg:h-64 lg:w-96">
 					{#if project.image}
 						<img src={project.image} alt={project.title} class="h-full w-full object-cover" />
 					{:else if project.video}
@@ -147,14 +147,14 @@
 				</div>
 
 				<!-- ── Description ── -->
-				<div class="flex flex-1 flex-col gap-6">
+				<div class="flex w-full flex-1 flex-col gap-6">
 					<!-- Index + title -->
 					<div>
 						<span class="font-mono text-[10px] tracking-[0.3em] text-white/20 uppercase">
 							{String(i + 1).padStart(2, '0')}
 						</span>
 						<h2
-							class="mt-1 text-4xl leading-tight font-light text-white/85 lg:text-5xl"
+							class="mt-1 text-2xl leading-tight font-light text-white/85 sm:text-3xl md:text-4xl lg:text-5xl"
 							style="font-family: 'Cormorant Garamond', serif;"
 						>
 							{project.title}
