@@ -9,6 +9,7 @@ RUN npm run build
 
 # ── Runtime stage ─────────────────────────────────────────
 FROM node:22-alpine
+# Could use a distroless image, but we would not have shell access for debugging
 
 WORKDIR /app
 COPY --from=builder /app/build .

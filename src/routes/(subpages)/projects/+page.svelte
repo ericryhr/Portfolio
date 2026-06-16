@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import smarttracking_00 from '$lib/assets/smarttracking_00.png';
+	import synthetic_labeling_example from '$lib/assets/synthetic_labeling_example.png';
+	import lizcore from '$lib/assets/lizcore.png';
 
 	// ── Projects data ──────────────────────────────────────────────────────────
 	// Replace with your actual projects. `image` can be an import path or null for placeholder.
@@ -10,7 +12,7 @@
 			blurb:
 				'Recreation of the Hawk-Eye visualization system used in tennis broadcasts, but using AI-upscaled real video for the ball impact points instead of CGI.',
 			stack: ['Unity', 'C#', 'C++', 'Blender'],
-			video: null,
+			video: '/videos/LongReal.mp4',
 			image: null,
 			accent: '#1a3a2a', // placeholder gradient accent colour — swap per project
 			accent2: '#0a1a14'
@@ -31,7 +33,7 @@
 				"Master's thesis on the use of synthetic data generated from 3D models and a game engine for training object detection models, as an alternative to manual annotation of real images.",
 			stack: ['YOLO', 'Unity', 'C#', 'Blender', 'Python'],
 			video: null,
-			image: null,
+			image: synthetic_labeling_example,
 			accent: '#1a3a1a',
 			accent2: '#0a1a0a'
 		},
@@ -51,7 +53,7 @@
 				'Design and deployment of a computer vision system that detects if a climber is well tied in before they start climbing, to prevent accidents.',
 			stack: ['Raspberry Pi', 'Python'],
 			video: null,
-			image: null,
+			image: lizcore,
 			accent: '#3a3a1a',
 			accent2: '#1a1a0a'
 		}
@@ -60,6 +62,14 @@
 	// ── Scroll reveal ──────────────────────────────────────────────────────────
 	// Track visibility per project (plain array — `$state` was incorrect here)
 	let visible = projects.map(() => false);
+
+	// Track natural aspect ratio per project's media (string like '16/9')
+	let mediaAspect: Array<string | null> = projects.map(() => null);
+
+	function setAspect(i: number, w: number, h: number) {
+		if (!w || !h) return;
+		mediaAspect[i] = `${w}/${h}`;
+	}
 
 	onMount(() => {
 		const observers: IntersectionObserver[] = [];
@@ -114,9 +124,22 @@
 				class:translate-y-0={visible[i]}
 			>
 				<!-- ── Graphic / image ── -->
-				<div class="relative h-56 w-full shrink-0 overflow-hidden md:h-56 md:w-72 lg:h-64 lg:w-96">
+				<div
+					class="media-container relative w-full shrink-0 overflow-hidden md:w-72 lg:w-96"
+					style="--ar: {mediaAspect[i] ?? '16/9'};"
+				>
 					{#if project.image}
-						<img src={project.image} alt={project.title} class="h-full w-full object-cover" />
+						<img
+							src={project.image}
+							alt={project.title}
+							class="h-full w-full object-cover"
+							on:load={(e) =>
+								setAspect(
+									i,
+									(e.currentTarget as HTMLImageElement).naturalWidth,
+									(e.currentTarget as HTMLImageElement).naturalHeight
+								)}
+						/>
 					{:else if project.video}
 						<video
 							src={project.video}
@@ -126,8 +149,13 @@
 							playsinline
 							preload="none"
 							class="h-full w-full object-cover"
-						>
-						</video>
+							on:loadedmetadata={(e) =>
+								setAspect(
+									i,
+									(e.currentTarget as HTMLVideoElement).videoWidth,
+									(e.currentTarget as HTMLVideoElement).videoHeight
+								)}
+						></video>
 					{:else}
 						<!-- Animated gradient placeholder -->
 						<div
@@ -213,5 +241,11 @@
 		);
 		background-size: 300% 300%;
 		animation: gradient-shift 6s ease infinite;
+	}
+
+	/* Container that uses the media's natural aspect ratio via --ar */
+	.media-container {
+		aspect-ratio: var(--ar);
+		max-width: 100%;
 	}
 </style>
