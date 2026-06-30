@@ -11,7 +11,7 @@
 
 2. Build image
 
-    ```docker build -t ericryhr/portfolio:tagname .```
+    ```docker build -t ericryhr/portfolio:tagname -t ericryhr/portfolio:latest .```
 
     Optionally run locally
 
